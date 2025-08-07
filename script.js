@@ -16,9 +16,23 @@ const renderInbox = () => {
   emails.forEach((email, index) => {
     const li = document.createElement('li');
     li.textContent = `${email.subject} - ${email.sender}`;
+    
+    // Change color based on read/unread status
+    li.style.backgroundColor = email.isRead ? '#444' : '#333';
+    
     li.addEventListener('click', () => viewEmail(index));
+
+    // Double-click to mark as read/unread
+    li.addEventListener('dblclick', () => toggleReadStatus(index)); 
+
     inbox.appendChild(li);
   });
+};
+
+// Function to mark email as read/unread
+const toggleReadStatus = (index) => {
+  emails[index].isRead = !emails[index].isRead;
+  renderInbox(); // Re-render inbox to reflect the status change
 };
 
 // Function to show email details
